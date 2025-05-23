@@ -19,6 +19,7 @@ import {
   Users, 
   X 
 } from "lucide-react"
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 export default function NotificationsPage() {
   // Mock notifications data
@@ -106,270 +107,277 @@ export default function NotificationsPage() {
   ).length;
   
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <AppSidebar />
-      <div className="flex flex-col">
-        <SiteHeader />
-        <main className="flex-1 p-6">
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">Notifications</h1>
-                <p className="text-muted-foreground">
-                  Stay updated with your courses and students
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline">
-                  <Bell className="h-4 w-4 mr-2" />
-                  Mark All as Read
-                </Button>
-                <Button variant="outline">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Notification Settings
-                </Button>
-              </div>
-            </div>
-            
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Unread Notifications
-                  </CardTitle>
-                  <Bell className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{unreadCount}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Require your attention
+    <SidebarProvider
+      style={{
+        "--sidebar-width": "16rem",
+        "--header-height": "4rem",
+      } as React.CSSProperties}
+    >
+      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+        <AppSidebar />
+        <div className="flex flex-col">
+          <SiteHeader />
+          <main className="flex-1 p-6">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight">Notifications</h1>
+                  <p className="text-muted-foreground">
+                    Stay updated with your courses and students
                   </p>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Today
-                  </CardTitle>
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{todayCount}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Notifications from today
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Submissions
-                  </CardTitle>
-                  <GraduationCap className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {notifications.filter(n => n.type === "submission").length}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    New assignment submissions
-                  </p>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Student Messages
-                  </CardTitle>
-                  <User2 className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {notifications.filter(n => n.type === "message").length}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Messages from students
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>All Notifications</CardTitle>
-                    <CardDescription>
-                      View and manage your recent notifications
-                    </CardDescription>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm">
-                      <Filter className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
-                    <Button variant="destructive" size="sm">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Clear All
-                    </Button>
-                  </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="all" className="w-full">
-                  <TabsList className="mb-4 w-full max-w-lg">
-                    <TabsTrigger value="all">
-                      All
-                      <Badge className="ml-2 bg-muted text-muted-foreground">{notifications.length}</Badge>
-                    </TabsTrigger>
-                    <TabsTrigger value="unread">
-                      Unread
-                      <Badge className="ml-2 bg-primary text-primary-foreground">{unreadCount}</Badge>
-                    </TabsTrigger>
-                    <TabsTrigger value="courses">Courses</TabsTrigger>
-                    <TabsTrigger value="system">System</TabsTrigger>
-                  </TabsList>
-                  
-                  <div className="space-y-4">
-                    {notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={`flex items-start justify-between rounded-lg border p-4 ${
-                          notification.read ? "" : "bg-primary/5"
-                        }`}
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className={`p-2 rounded-full ${getNotificationIconBgClass(notification.type)}`}>
-                            {getNotificationIcon(notification.type)}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <div className={`font-medium ${notification.read ? "" : "font-semibold"}`}>
-                                {notification.title}
+                <div className="flex items-center gap-2">
+                  <Button variant="outline">
+                    <Bell className="h-4 w-4 mr-2" />
+                    Mark All as Read
+                  </Button>
+                  <Button variant="outline">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Notification Settings
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Unread Notifications
+                    </CardTitle>
+                    <Bell className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{unreadCount}</div>
+                    <p className="text-xs text-muted-foreground">
+                      Require your attention
+                    </p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Today
+                    </CardTitle>
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{todayCount}</div>
+                    <p className="text-xs text-muted-foreground">
+                      Notifications from today
+                    </p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Submissions
+                    </CardTitle>
+                    <GraduationCap className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      {notifications.filter(n => n.type === "submission").length}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      New assignment submissions
+                    </p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Student Messages
+                    </CardTitle>
+                    <User2 className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">
+                      {notifications.filter(n => n.type === "message").length}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Messages from students
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle>All Notifications</CardTitle>
+                      <CardDescription>
+                        View and manage your recent notifications
+                      </CardDescription>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" size="sm">
+                        <Filter className="h-4 w-4 mr-2" />
+                        Filter
+                      </Button>
+                      <Button variant="destructive" size="sm">
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Clear All
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="all" className="w-full">
+                    <TabsList className="mb-4 w-full max-w-lg">
+                      <TabsTrigger value="all">
+                        All
+                        <Badge className="ml-2 bg-muted text-muted-foreground">{notifications.length}</Badge>
+                      </TabsTrigger>
+                      <TabsTrigger value="unread">
+                        Unread
+                        <Badge className="ml-2 bg-primary text-primary-foreground">{unreadCount}</Badge>
+                      </TabsTrigger>
+                      <TabsTrigger value="courses">Courses</TabsTrigger>
+                      <TabsTrigger value="system">System</TabsTrigger>
+                    </TabsList>
+                    
+                    <div className="space-y-4">
+                      {notifications.map((notification) => (
+                        <div
+                          key={notification.id}
+                          className={`flex items-start justify-between rounded-lg border p-4 ${
+                            notification.read ? "" : "bg-primary/5"
+                          }`}
+                        >
+                          <div className="flex items-start gap-4">
+                            <div className={`p-2 rounded-full ${getNotificationIconBgClass(notification.type)}`}>
+                              {getNotificationIcon(notification.type)}
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <div className={`font-medium ${notification.read ? "" : "font-semibold"}`}>
+                                  {notification.title}
+                                </div>
+                                {!notification.read && (
+                                  <Badge variant="secondary" className="text-xs font-normal">New</Badge>
+                                )}
+                                {notification.course && (
+                                  <Badge variant="outline" className="text-xs font-normal">
+                                    {notification.course}
+                                  </Badge>
+                                )}
                               </div>
-                              {!notification.read && (
-                                <Badge variant="secondary" className="text-xs font-normal">New</Badge>
-                              )}
-                              {notification.course && (
-                                <Badge variant="outline" className="text-xs font-normal">
-                                  {notification.course}
-                                </Badge>
-                              )}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {notification.description}
-                            </div>
-                            <div className="text-xs text-muted-foreground mt-1">
-                              {notification.timestamp}
+                              <div className="text-sm text-muted-foreground">
+                                {notification.description}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                {notification.timestamp}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex gap-2">
-                          {!notification.read && (
+                          <div className="flex gap-2">
+                            {!notification.read && (
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <Check className="h-4 w-4" />
+                              </Button>
+                            )}
                             <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <Check className="h-4 w-4" />
+                              <X className="h-4 w-4" />
                             </Button>
-                          )}
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <X className="h-4 w-4" />
-                          </Button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </Tabs>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Notification Preferences</CardTitle>
-                <CardDescription>
-                  Manage how and when you receive notifications
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-blue-100 rounded-full dark:bg-blue-900/20">
-                        <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <div>
-                        <div className="font-medium">Assignment Submissions</div>
-                        <div className="text-sm text-muted-foreground">
-                          Get notified when students submit assignments
-                        </div>
-                      </div>
+                      ))}
                     </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-amber-100 rounded-full dark:bg-amber-900/20">
-                        <Calendar className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-                      </div>
-                      <div>
-                        <div className="font-medium">Deadline Reminders</div>
-                        <div className="text-sm text-muted-foreground">
-                          Receive reminders for upcoming course deadlines
+                  </Tabs>
+                </CardContent>
+              </Card>
+              
+              <Card>
+                <CardHeader>
+                  <CardTitle>Notification Preferences</CardTitle>
+                  <CardDescription>
+                    Manage how and when you receive notifications
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2 bg-blue-100 rounded-full dark:bg-blue-900/20">
+                          <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Assignment Submissions</div>
+                          <div className="text-sm text-muted-foreground">
+                            Get notified when students submit assignments
+                          </div>
                         </div>
                       </div>
+                      <Switch defaultChecked />
                     </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-green-100 rounded-full dark:bg-green-900/20">
-                        <User2 className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      </div>
-                      <div>
-                        <div className="font-medium">Student Messages</div>
-                        <div className="text-sm text-muted-foreground">
-                          Be notified when students send you messages
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2 bg-amber-100 rounded-full dark:bg-amber-900/20">
+                          <Calendar className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Deadline Reminders</div>
+                          <div className="text-sm text-muted-foreground">
+                            Receive reminders for upcoming course deadlines
+                          </div>
                         </div>
                       </div>
+                      <Switch defaultChecked />
                     </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-red-100 rounded-full dark:bg-red-900/20">
-                        <Users className="h-5 w-5 text-red-600 dark:text-red-400" />
-                      </div>
-                      <div>
-                        <div className="font-medium">At-Risk Student Alerts</div>
-                        <div className="text-sm text-muted-foreground">
-                          Receive alerts for students who may need additional support
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2 bg-green-100 rounded-full dark:bg-green-900/20">
+                          <User2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium">Student Messages</div>
+                          <div className="text-sm text-muted-foreground">
+                            Be notified when students send you messages
+                          </div>
                         </div>
                       </div>
+                      <Switch defaultChecked />
                     </div>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="p-2 bg-purple-100 rounded-full dark:bg-purple-900/20">
-                        <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                      </div>
-                      <div>
-                        <div className="font-medium">System Announcements</div>
-                        <div className="text-sm text-muted-foreground">
-                          Get updates about new features and system changes
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2 bg-red-100 rounded-full dark:bg-red-900/20">
+                          <Users className="h-5 w-5 text-red-600 dark:text-red-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium">At-Risk Student Alerts</div>
+                          <div className="text-sm text-muted-foreground">
+                            Receive alerts for students who may need additional support
+                          </div>
                         </div>
                       </div>
+                      <Switch defaultChecked />
                     </div>
-                    <Switch defaultChecked />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="p-2 bg-purple-100 rounded-full dark:bg-purple-900/20">
+                          <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <div>
+                          <div className="font-medium">System Announcements</div>
+                          <div className="text-sm text-muted-foreground">
+                            Get updates about new features and system changes
+                          </div>
+                        </div>
+                      </div>
+                      <Switch defaultChecked />
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </main>
+                </CardContent>
+              </Card>
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   )
 }
 

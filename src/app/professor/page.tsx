@@ -18,8 +18,8 @@ export default function ProfessorDashboardPage() { // Renamed from Page
   return (
     <SidebarProvider
       style={{
-        "--sidebar-width": "calc(var(--spacing) * 72)",
-        "--header-height": "calc(var(--spacing) * 16)",
+        "--sidebar-width": "16rem",
+        "--header-height": "4rem",
       } as React.CSSProperties}
     >
       <AppSidebar variant="inset" />

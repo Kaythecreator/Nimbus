@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Archive, Edit, Inbox, Mail, MessageSquare, Search, Star, Trash2, UserRound } from "lucide-react"
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 export default function InboxPage() {
   // Mock messages data
@@ -98,125 +99,132 @@ export default function InboxPage() {
   ];
 
   return (
-    <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <AppSidebar />
-      <div className="flex flex-col">
-        <SiteHeader />
-        <main className="flex-1">
-          <div className="border-b">
-            <div className="flex h-16 items-center px-4 gap-4">
-              <Button variant="ghost" size="icon" className="mr-2">
-                <Inbox className="h-5 w-5" />
-              </Button>
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search messages..." className="pl-8" />
-              </div>
-              <Button variant="ghost" size="icon">
-                <Archive className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Trash2 className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon">
-                <Star className="h-5 w-5" />
-              </Button>
-              <Button>
-                <Edit className="h-5 w-5 mr-2" />
-                Compose
-              </Button>
-            </div>
-          </div>
-          
-          <div className="grid lg:grid-cols-[240px_1fr] h-[calc(100vh-9rem)]">
-            {/* Sidebar */}
-            <div className="border-r">
-              <div className="space-y-1 p-2">
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Inbox className="h-4 w-4" />
-                  <span>Inbox</span>
-                  <Badge className="ml-auto">3</Badge>
+    <SidebarProvider
+      style={{
+        "--sidebar-width": "16rem",
+        "--header-height": "4rem",
+      } as React.CSSProperties}
+    >
+      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
+        <AppSidebar />
+        <div className="flex flex-col">
+          <SiteHeader />
+          <main className="flex-1">
+            <div className="border-b">
+              <div className="flex h-16 items-center px-4 gap-4">
+                <Button variant="ghost" size="icon" className="mr-2">
+                  <Inbox className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <UserRound className="h-4 w-4" />
-                  <span>Students</span>
-                  <Badge className="ml-auto">2</Badge>
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input placeholder="Search messages..." className="pl-8" />
+                </div>
+                <Button variant="ghost" size="icon">
+                  <Archive className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <MessageSquare className="h-4 w-4" />
-                  <span>Faculty</span>
+                <Button variant="ghost" size="icon">
+                  <Trash2 className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Star className="h-4 w-4" />
-                  <span>Flagged</span>
-                  <Badge className="ml-auto">2</Badge>
+                <Button variant="ghost" size="icon">
+                  <Star className="h-5 w-5" />
                 </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>System</span>
-                </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Archive className="h-4 w-4" />
-                  <span>Archive</span>
-                </Button>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Trash2 className="h-4 w-4" />
-                  <span>Trash</span>
+                <Button>
+                  <Edit className="h-5 w-5 mr-2" />
+                  Compose
                 </Button>
               </div>
             </div>
             
-            {/* Messages */}
-            <div className="flex flex-col">
-              <Tabs defaultValue="all" className="w-full border-b">
-                <div className="px-4 pt-2">
-                  <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="unread">Unread</TabsTrigger>
-                    <TabsTrigger value="flagged">Flagged</TabsTrigger>
-                  </TabsList>
+            <div className="grid lg:grid-cols-[240px_1fr] h-[calc(100vh-9rem)]">
+              {/* Sidebar */}
+              <div className="border-r">
+                <div className="space-y-1 p-2">
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <Inbox className="h-4 w-4" />
+                    <span>Inbox</span>
+                    <Badge className="ml-auto">3</Badge>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <UserRound className="h-4 w-4" />
+                    <span>Students</span>
+                    <Badge className="ml-auto">2</Badge>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <MessageSquare className="h-4 w-4" />
+                    <span>Faculty</span>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <Star className="h-4 w-4" />
+                    <span>Flagged</span>
+                    <Badge className="ml-auto">2</Badge>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <Mail className="h-4 w-4" />
+                    <span>System</span>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <Archive className="h-4 w-4" />
+                    <span>Archive</span>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-2">
+                    <Trash2 className="h-4 w-4" />
+                    <span>Trash</span>
+                  </Button>
                 </div>
-              </Tabs>
+              </div>
               
-              <div className="flex-1 overflow-auto">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex items-start gap-4 p-4 border-b hover:bg-muted/50 cursor-pointer ${message.unread ? "bg-primary/5" : ""}`}
-                  >
-                    <Avatar className="h-10 w-10 mt-1">
-                      <AvatarImage src={message.avatar} alt={message.sender} />
-                      <AvatarFallback>{message.avatarFallback}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-1 overflow-hidden">
-                      <div className="flex items-center gap-2">
-                        <div className={`font-medium ${message.unread ? "font-semibold" : ""}`}>
-                          {message.sender}
-                        </div>
-                        {message.unread && (
-                          <Badge variant="secondary" className="text-xs font-normal">New</Badge>
-                        )}
-                        {message.flagged && (
-                          <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-                        )}
-                      </div>
-                      <div className={`text-sm ${message.unread ? "font-semibold" : ""}`}>
-                        {message.subject}
-                      </div>
-                      <div className="text-sm text-muted-foreground truncate">
-                        {message.preview}
-                      </div>
-                    </div>
-                    <div className="text-xs text-muted-foreground whitespace-nowrap">
-                      {message.date}
-                    </div>
+              {/* Messages */}
+              <div className="flex flex-col">
+                <Tabs defaultValue="all" className="w-full border-b">
+                  <div className="px-4 pt-2">
+                    <TabsList>
+                      <TabsTrigger value="all">All</TabsTrigger>
+                      <TabsTrigger value="unread">Unread</TabsTrigger>
+                      <TabsTrigger value="flagged">Flagged</TabsTrigger>
+                    </TabsList>
                   </div>
-                ))}
+                </Tabs>
+                
+                <div className="flex-1 overflow-auto">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex items-start gap-4 p-4 border-b hover:bg-muted/50 cursor-pointer ${message.unread ? "bg-primary/5" : ""}`}
+                    >
+                      <Avatar className="h-10 w-10 mt-1">
+                        <AvatarImage src={message.avatar} alt={message.sender} />
+                        <AvatarFallback>{message.avatarFallback}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 space-y-1 overflow-hidden">
+                        <div className="flex items-center gap-2">
+                          <div className={`font-medium ${message.unread ? "font-semibold" : ""}`}>
+                            {message.sender}
+                          </div>
+                          {message.unread && (
+                            <Badge variant="secondary" className="text-xs font-normal">New</Badge>
+                          )}
+                          {message.flagged && (
+                            <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+                          )}
+                        </div>
+                        <div className={`text-sm ${message.unread ? "font-semibold" : ""}`}>
+                          {message.subject}
+                        </div>
+                        <div className="text-sm text-muted-foreground truncate">
+                          {message.preview}
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground whitespace-nowrap">
+                        {message.date}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   )
 } 
