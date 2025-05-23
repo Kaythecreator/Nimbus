@@ -320,6 +320,16 @@ function QuickWidgetGrid({ widgets }: { widgets: QuickWidget[] }) {
     setHoveredWidget(null);
   };
 
+  const getQuickActionHref = (widgetId: string) => {
+    const routes: { [key: string]: string } = {
+      'pomodoro': '/student/quick-actions/pomodoro',
+      'ai-chat': '/student/quick-actions/ai-chat',
+      'notes': '/student/quick-actions/notes',
+      'reminders': '/student/quick-actions/reminders'
+    };
+    return routes[widgetId] || '#';
+  };
+
   return (
     <div className="px-0 py-0 w-full">
       <SidebarGroupLabel className="mb-2 px-2 font-semibold text-sm" data-collapse-hide>Quick Actions</SidebarGroupLabel>
@@ -327,17 +337,22 @@ function QuickWidgetGrid({ widgets }: { widgets: QuickWidget[] }) {
       <div className="px-2" data-collapse-hide>
         <div className="grid grid-cols-2 gap-1">
           {widgets.map((widget) => (
-            <Button
-              key={widget.id}
-              variant="ghost"
-              size="sm"
-              className="h-12 w-full flex flex-col items-center justify-center p-2 bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md"
-              onMouseMove={(e) => handleMouseMove(e, widget.id)}
-              onMouseEnter={() => handleMouseEnter(widget.id)}
-              onMouseLeave={handleMouseLeave}
+            <Link 
+              key={widget.id} 
+              href={getQuickActionHref(widget.id)}
+              className="block"
             >
-              <widget.icon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-12 w-full flex flex-col items-center justify-center p-2 bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md"
+                onMouseMove={(e) => handleMouseMove(e, widget.id)}
+                onMouseEnter={() => handleMouseEnter(widget.id)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <widget.icon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+              </Button>
+            </Link>
           ))}
         </div>
       </div>
@@ -345,17 +360,22 @@ function QuickWidgetGrid({ widgets }: { widgets: QuickWidget[] }) {
       <div className="px-1 py-1" data-collapse-show>
         <div className="grid grid-cols-1 gap-2">
           {widgets.map((widget) => (
-            <Button
-              key={widget.id}
-              variant="ghost"
-              size="sm"
-              className="h-8 w-full flex items-center justify-center p-5 bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md"
-              onMouseMove={(e) => handleMouseMove(e, widget.id)}
-              onMouseEnter={() => handleMouseEnter(widget.id)}
-              onMouseLeave={handleMouseLeave}
+            <Link 
+              key={widget.id} 
+              href={getQuickActionHref(widget.id)}
+              className="block"
             >
-              <widget.icon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-full flex items-center justify-center p-5 bg-gray-100 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md"
+                onMouseMove={(e) => handleMouseMove(e, widget.id)}
+                onMouseEnter={() => handleMouseEnter(widget.id)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <widget.icon className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+              </Button>
+            </Link>
           ))}
         </div>
       </div>
