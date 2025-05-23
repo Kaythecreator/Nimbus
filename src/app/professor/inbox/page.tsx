@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Archive, Edit, Inbox, Mail, MessageSquare, Search, Star, Trash2, UserRound } from "lucide-react"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export default function InboxPage() {
   // Mock messages data
@@ -105,11 +105,11 @@ export default function InboxPage() {
         "--header-height": "4rem",
       } as React.CSSProperties}
     >
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <AppSidebar />
-        <div className="flex flex-col">
-          <SiteHeader />
-          <main className="flex-1">
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="border-b">
               <div className="flex h-16 items-center px-4 gap-4">
                 <Button variant="ghost" size="icon" className="mr-2">
@@ -222,9 +222,9 @@ export default function InboxPage() {
                 </div>
               </div>
             </div>
-          </main>
+          </div>
         </div>
-      </div>
+      </SidebarInset>
     </SidebarProvider>
   )
 } 

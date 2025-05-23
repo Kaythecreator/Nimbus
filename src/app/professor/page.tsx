@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/professor/section-cards";
 import { AtRiskStudents } from "@/components/professor/at-risk-students";
 import { EngagementStats } from "@/components/professor/engagement-stats";
@@ -12,9 +11,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 
-import data from "./data.json"; // Will update this path if data.json is moved to professor folder
-
-export default function ProfessorDashboardPage() { // Renamed from Page
+export default function ProfessorDashboardPage() {
   return (
     <SidebarProvider
       style={{

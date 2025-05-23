@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button"
 import { CalendarIcon, ChevronLeft, ChevronRight, Plus } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export default function CalendarPage() {
   // Mock calendar data
@@ -31,12 +31,12 @@ export default function CalendarPage() {
         "--header-height": "4rem",
       } as React.CSSProperties}
     >
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <AppSidebar />
-        <div className="flex flex-col">
-          <SiteHeader />
-          <main className="flex-1 p-6">
-            <div className="space-y-6">
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 px-4 lg:px-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight">Calendar</h1>
@@ -221,9 +221,9 @@ export default function CalendarPage() {
                 </Card>
               </div>
             </div>
-          </main>
+          </div>
         </div>
-      </div>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

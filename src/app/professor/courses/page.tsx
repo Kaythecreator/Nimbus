@@ -17,7 +17,7 @@ import {
   Users 
 } from "lucide-react"
 import Link from "next/link"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 
 export default function CoursesPage() {
   // Mock courses data
@@ -128,12 +128,12 @@ export default function CoursesPage() {
         "--header-height": "4rem",
       } as React.CSSProperties}
     >
-      <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-        <AppSidebar />
-        <div className="flex flex-col">
-          <SiteHeader />
-          <main className="flex-1 p-6">
-            <div className="space-y-6">
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 px-4 lg:px-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight">Courses</h1>
@@ -355,9 +355,9 @@ export default function CoursesPage() {
                 </TabsContent>
               </Tabs>
             </div>
-          </main>
+          </div>
         </div>
-      </div>
+      </SidebarInset>
     </SidebarProvider>
   )
 } 
